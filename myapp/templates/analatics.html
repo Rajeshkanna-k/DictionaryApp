@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Analytics</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <style>
+        * {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height:auto; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+       h2
+{
+  font-size: 22px;
+  /* text-shadow: -1px -1px rgb(19, 1, 1), 1px 1px rgb(41, 3, 3), -3px 0 4px #000; */
+  font-family: 'Courier New', Courier, monospace;
+  color:rgb(10, 0, 0);
+  padding:10px;
+  font-weight: bold;
+  -moz-box-shadow: 2px 2px 6px rgb(253, 253, 253);  
+  -webkit-box-shadow: 2px 2px 6px rgb(255, 254, 254);  
+  box-shadow:2px 2px 6px rgb(156, 155, 155);  
+  text-align:center;
+  display:inline;
+  line-height:92px;
+  /* background-color: rgb(52, 151, 151); */
+}
+h3
+{
+    font-size: 22px;
+  /* text-shadow: -1px -1px rgb(19, 1, 1), 1px 1px rgb(41, 3, 3), -3px 0 4px #000; */
+  font-family: 'Courier New', Courier, monospace;
+  padding:10px;
+  font-weight: bold;
+  -moz-box-shadow: 2px 2px 6px rgb(255, 253, 253);  
+  -webkit-box-shadow: 2px 2px 6px rgb(252, 250, 250);  
+  box-shadow:2px 2px 6px rgb(253, 253, 253);  
+  text-align:center;
+  display:inline;
+  line-height:92px;
+  /* background-color: rgb(52, 151, 151); */
+}
+.not-found-words
+{
+  font-size: 19px;
+  padding:1px;
+  -moz-box-shadow: 2px 2px 6px #888;  
+  -webkit-box-shadow: 2px 2px 6px #888;  
+  box-shadow:2px 2px 6px rgb(228, 19, 19);   
+  text-align:center;
+  display:inline;
+  line-height:20px;
+  /* background-color: rgb(235, 32, 32); */
+}
+.subtitle
+{
+  font-size: 30px;
+  color:#ccc;
+  padding:1px;
+  -moz-box-shadow: 2px 2px 6px #888;  
+  -webkit-box-shadow: 2px 2px 6px #888;  
+  box-shadow:2px 2px 6px rgb(228, 19, 19);  
+  text-align:center;
+  display:inline;
+  line-height:20px;
+  width: 50px;
+  /* background-color: rgb(235, 32, 32); */
+}
+.myButton {
+    
+    padding: 20px;
+    display:block;
+    float:right;
+    /* background-color: rgb(11, 152, 247); */
+    color: rgb(251, 252, 249);
+    text-align:top;
+
+ }
+ table {
+  counter-reset: serial-number;  /* Set the serial number counter to 0 */
+}
+
+table td:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
+}
+    </style>
+</head>
+
+<body>
+   
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <div class="col">
+                <h1 class="title">
+                    Analytics
+                </h1>
+            </div>
+            </div>
+            <div class="myButton" >
+                <a  href="{% url 'home' %}">Home</a> |
+                <a  href="{% url 'logout' %}">Logout</a>
+              </ul>
+            </div>
+        </div>
+    </section>
+</section>
+<section>
+   
+<h2>Welcome, user</h2>
+
+<div class="row">
+  <div class="column" style="background-color:rgb(255, 255, 255);">
+    <h2 style="color:rgb(0, 0, 0)";>Most Searched Words:</h2>
+    {% for search_Word in show_Most_Search_Words %}
+  <div class="content" style="background-color: red; color: rgb(255, 255, 255);border-radius: 40px; border: rgb(14, 231, 25); width: fit-content; height: fit-content; line-height: 20px; ">
+      &nbsp;  {{search_Word}}  &nbsp;
+    </div>
+    {% endfor %}
+  </div>
+  <div class="column" style="background-color:rgb(255, 255, 255);">
+    <h2 style="color:rgb(0, 0, 0)";>Visitors Count:</h2>
+    <table class="table">
+        <thead class="thead-dark" style="background-color:rgb(243, 238, 238);">
+          <tr>
+            <th scope="col">SL #</th>
+            <th scope="col">Visitors Count</th>
+            <th scope="col">Visited Date</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for show_visit_counts in show_Visitors_Counts %}
+          <tr>
+            <td></td>
+            <td>{{show_visit_counts.visitors_count}}</td>
+            <td>{{show_visit_counts.created_date}}</td>
+          </tr>
+          <tr>
+           {% endfor %}
+        </tbody>
+      </table>
+  </div>
+</div>
+
+</section>
+<!-- <section class="section">
+    <div class="container"> -->
+        <!-- <h2 style="color:rgb(5, 10, 10)";>Most Searched Words:</h2>
+        <div class="row">
+            <div class="column is-offset-0 is-1"  style="margin-left: 0%">
+                {% for search_Word in show_Most_Search_Words %} -->
+                <!-- <div class="box"> -->
+                    <!-- <article class="media">
+                        <div class="media-content">
+                            <div class="content" >
+                                <p word-spacing: 0px;>
+                                    <span class="subtitle" >{{search_Word}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </article> -->
+                <!-- </div> -->
+                <!-- {% endfor %}
+        
+            </div>
+            
+        <div class="column is-offset-3 is-4" style="margin-left: 60%"> 
+            <div >
+                 <h2 style="color:rgb(5, 10, 10)";>Visitors count:</h2>
+                    {% for show_visit_counts in show_Visitors_Counts %}
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="content" >
+                                <p word-spacing: 30px;>
+                                    <span class="subtitle" >{{show_visit_counts}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+            </div>
+        </div>
+        </div>
+
+        <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Visitors Count</th>
+                <th scope="col">Created_Date</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for show_visit_counts in show_Visitors_Counts %}
+              <tr>
+                <th scope="row">1</th>
+                <td>{{show_visit_counts}}</td>
+              </tr>
+              <tr>
+               {% endfor %}
+            </tbody>
+          </table>
+</section>-->
+<section>
+
+    <h3> The word not found in dictionary: </h3> 
+    <div class="row" style="padding-bottom: 30px; height: 50%;">
+    {% for not_found in filtered_Not_Found_Word %}
+    <div class="not-found-words" >
+        &nbsp; {{not_found}} &nbsp;
+    </div>
+    {% endfor %} 
+</div>
+</section>
+<!-- <section> -->
+<!-- 
+    <h3> The word not found in dictionary: </h3> 
+    <div class="row">
+    {% for not_found in filtered_Not_Found_Word %}
+    
+    <div class="not-found-words" >
+        &nbsp; {{not_found}} &nbsp;
+    </div>
+    {% endfor %} 
+ </div>
+</div> -->
+<!-- <section class="section">
+    <div class="container">
+        <h3 style="color:rgb(22, 4, 4)";>The word not found in dictionary:</h3>
+        <div class="row">
+            <div class="column is-offset-4 is-4">
+                {% for not_found in filtered_Not_Found_Word %}
+                <div class="box">
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="content" >
+                                <p word-spacing: 30px;>
+                                    <span class="found" >{{not_found}}</span>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section> -->
+</body>   
+</html>

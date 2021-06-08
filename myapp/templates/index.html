@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <style>
+      .myButton {
+    
+         padding: 20px;
+         display:block;
+         float:right;
+         /* background-color: rgb(11, 152, 247); */
+         color: rgb(251, 252, 249);
+         text-align:top;
+    
+      }
+      /* .found
+{
+  font-size: 24px;
+  text-shadow: -1px -1px #eee, 1px 1px #888, -3px 0 4px #000;
+  font-family: 'Courier New', Courier, monospace;
+  color:#ccc;
+  padding:10px;
+  font-weight:lighter;
+  -moz-box-shadow: 2px 2px 6px #888;  
+  -webkit-box-shadow: 2px 2px 6px #888;  
+  box-shadow:2px 2px 6px #888;  
+  text-align:center;
+  display:inline;
+  line-height:92px;
+  background-color: rgb(151, 52, 52);
+} */
+/* .subtitle
+{
+  font-size: 24px;
+  text-shadow: -1px -1px #eee, 1px 1px #888, -3px 0 4px #000;
+  font-family: 'Courier New', Courier, monospace;
+  color:#ccc;
+  padding:10px;
+  font-weight:lighter;
+  -moz-box-shadow: 2px 2px 6px #888;  
+  -webkit-box-shadow: 2px 2px 6px #888;  
+  box-shadow:2px 2px 6px #888;  
+  text-align:center;
+  display:inline;
+  line-height:92px;
+  background-color: rgb(52, 151, 151);
+  flex-direction: row-reverse;
+} */
+  </style>
+</head>
+<body>
+ 
+     <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <div class="col">
+                <h1 class="title">
+                    What's the word like?
+                </h1>
+            </div>
+            </div>
+            <div class="myButton"  >
+                {% if user.is_authenticated %}
+                     <a  href="{% url 'analatics' %}">Analatics</a> |
+                     <a  href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                     <a href="{% url 'login' %}">Login</a> |
+                     <a  href="{% url 'register' %}">Register</a>
+                {% endif %}
+              </ul>
+            </div>
+        </div>
+        <!-- {{Request.GET.q}} -->
+
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                              <!-- <input class="input" type="text" placeholder="Enter the word"> -->
+                                {{ form.name }}
+                            </div>
+                            <div class="control">
+                                <button type="submit" class="button is-info">
+                                    Search 
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                
+                <div class="column is-offset-4 is-4">
+                        <article class="media">
+                            <div class="media-left"></div>
+                            <div class="media-content">
+                                <div class="content">
+                                  {% if isSubmitted%}
+                                    <p>
+                                        <span class="title">{{word_data.word}}</span>
+                                        <br>
+                                        
+                                        {% if word_data.synonyms != None %}
+                                        <h1>Synonyms:</h1>
+                                        <span class="subtitle"> {{word_data.synonyms}} </span>
+                                        <br>
+                                        <h1>Antonyms:</h1>
+                                        <span class="subtitle">{{ word_data.antonyms }}</span>
+                                        <br> 
+                                        {% else %}
+                                        <span class="subtitle" style="color: red;" > Searched word not found</span>
+                                        {% endif %}
+                                    </p>
+                                  {% endif %} 
+                                </div>
+                            </div>
+                        </article>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    <footer class="footer">
+    </footer>
+    
+</body>
+
+</html>
+   
